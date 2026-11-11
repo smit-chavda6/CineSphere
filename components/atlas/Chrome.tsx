@@ -18,6 +18,7 @@ import { useUi } from '@/store/ui';
 import { Go } from './nav';
 import { Pocket } from './Pocket';
 import { Settings } from './Settings';
+import { Credit } from './Credit';
 import { STATION, STATIONS, type ChartLayout, type Direction, type StationId } from './stations';
 import { Frame } from '@/components/ui/kit';
 import { cn } from '@/lib/utils';
@@ -325,6 +326,7 @@ export function Legend({
             </li>
           ))}
         </ul>
+        <Credit className="mt-3 border-t border-ink/30 pt-2 text-center" />
       </Frame>
       <ul className="no-scrollbar flex gap-2 overflow-x-auto px-3 lg:hidden">
         {STATIONS.map((s) => (

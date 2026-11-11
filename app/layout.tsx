@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   title: { default: `${SITE.name} — ${SITE.tagline}`, template: `%s — ${SITE.name}` },
   description: SITE.description,
   applicationName: SITE.name,
+  authors: [{ name: SITE.author }],
+  creator: SITE.author,
   openGraph: {
     type: 'website',
     siteName: SITE.name,

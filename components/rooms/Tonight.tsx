@@ -12,6 +12,7 @@ import { useUi } from '@/store/ui';
 import { Go, go, isTyping, useRoomActive } from '@/components/atlas/nav';
 import { ErrorNote, Frame, Pic, ScaleBar } from '@/components/ui/kit';
 import { Reel } from '@/components/ui/Poster';
+import { Credit } from '@/components/atlas/Credit';
 import { addDays, cn, isoDate, yearOf } from '@/lib/utils';
 import { blend, type Focus } from '@/lib/focus';
 import type { CardMovie } from '@/types/app';
@@ -341,7 +342,10 @@ export function Tonight() {
                   Whole chart →
                 </Go>
               </p>
-              <ScaleBar className="shrink-0" />
+              <div className="shrink-0 text-right">
+                <ScaleBar />
+                <Credit className="mt-1 text-[13px]" />
+              </div>
             </div>
           </Frame>
 

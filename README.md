@@ -134,4 +134,6 @@ How each tool uses the engine:
 
 ---
 
+Made by Smit Chavda.
+
 This product uses the TMDB API but is not endorsed or certified by TMDB. Streaming availability data is provided by JustWatch.

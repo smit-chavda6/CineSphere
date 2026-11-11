@@ -14,6 +14,7 @@ import { AlertTriangle, Compass, KeyRound, RotateCcw, Star, X } from 'lucide-rea
 import { TMDB_IMAGE_BASE, sizeFor, type ImageKind } from '@/lib/tmdb/images';
 import { ApiError } from '@/lib/tmdb/browser';
 import { cn } from '@/lib/utils';
+import { Credit } from '@/components/atlas/Credit';
 
 /* ---------------------------------------------------------------- Pic */
 
@@ -596,6 +597,7 @@ export function Room({
         </div>
       </Frame>
       {children}
+      <Credit className="mt-14 text-center" />
     </section>
   );
 }

@@ -7,6 +7,7 @@ import { FOCUS_OPTIONS, type Focus } from '@/lib/focus';
 import { useLibrary } from '@/store/library';
 import { useUi } from '@/store/ui';
 import { Frame } from '@/components/ui/kit';
+import { Credit } from './Credit';
 import { cn } from '@/lib/utils';
 
 /**
@@ -110,6 +111,7 @@ export function Settings() {
               </button>
             </div>
           </div>
+          <Credit className="border-t border-ink/30 pt-3 text-center" />
         </Frame>
       )}
     </div>
