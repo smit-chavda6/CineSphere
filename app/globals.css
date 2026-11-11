@@ -1,0 +1,403 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   CineSphere — "Old Atlas" design system.
+   The whole site is an antique printed map: aged parchment, sepia ink,
+   engraved lettering, double-ruled cartouches; every place sits on its own island.
+   Films open on a dark umber plate ([data-theme='night']).
+   Colours are RGB triplets so Tailwind can apply alpha.
+   ------------------------------------------------------------------ */
+:root {
+  --paper: 233 220 188;
+  --island: 244 234 210;
+  --sea: 200 210 192;
+  --ink: 46 32 20;
+  --dim: 112 90 64;
+  --accent: 160 40 26;
+  --on-accent: 250 238 214;
+  --gold: 146 100 28;
+  --ok: 52 104 58;
+  --danger: 160 32 28;
+  --font-mono: var(--font-sans);
+  color-scheme: light;
+}
+
+[data-theme='night'] {
+  --paper: 30 23 17;
+  --island: 43 34 25;
+  --sea: 34 33 30;
+  --ink: 238 224 192;
+  --dim: 176 156 124;
+  --accent: 226 116 72;
+  --on-accent: 30 16 8;
+  --gold: 222 172 84;
+  --ok: 128 192 124;
+  --danger: 240 124 104;
+  color-scheme: dark;
+}
+
+html {
+  background: rgb(var(--paper));
+  -webkit-text-size-adjust: 100%;
+}
+
+/* The app is a fixed stage: places scroll inside themselves, the document never does. */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+  /* Garamond has a small x-height; keep running text readable. */
+  font-size-adjust: 0.47;
+}
+
+::selection {
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+/* Places load images and text after they open; never let the browser nudge the scroll. */
+* {
+  overflow-anchor: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink) / 0.3) transparent;
+}
+
+/* Tabular, lining figures wherever numbers are set as data. */
+.font-mono {
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+@layer components {
+  /* ---------- Parchment ---------- */
+  .parchment {
+    background-color: rgb(var(--paper));
+    background-image: radial-gradient(
+        ellipse at 50% 45%,
+        transparent 55%,
+        rgb(var(--ink) / 0.16) 100%
+      ),
+      radial-gradient(circle at 12% 18%, rgb(var(--gold) / 0.1), transparent 30%),
+      radial-gradient(circle at 86% 78%, rgb(var(--gold) / 0.09), transparent 34%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.17 0 0 0 0 0.08 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Type ---------- */
+  .t-display {
+    @apply font-display;
+    font-weight: 400;
+    font-size-adjust: none;
+    letter-spacing: 0.01em;
+    line-height: 0.98;
+  }
+  .t-place {
+    @apply font-serif italic;
+    font-size-adjust: none;
+    letter-spacing: 0.005em;
+  }
+  /* Map labels: letter-spaced engraved capitals. */
+  .t-mono {
+    @apply font-display text-[12px] uppercase;
+    font-size-adjust: none;
+    letter-spacing: 0.14em;
+  }
+
+  /* ---------- Controls: stamped labels and a wax-seal red ---------- */
+  .btn {
+    @apply inline-flex min-h-[40px] select-none items-center justify-center gap-2 border border-ink/50 bg-island/80 px-4 font-display text-[15px] text-ink transition duration-150 hover:border-ink hover:bg-ink hover:text-paper active:translate-y-px disabled:pointer-events-none disabled:opacity-40;
+    font-size-adjust: none;
+    letter-spacing: 0.05em;
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--island) / 0.9),
+      inset 0 0 0 3px rgb(var(--ink) / 0.18);
+  }
+  .btn-solid {
+    @apply inline-flex min-h-[40px] select-none items-center justify-center gap-2 border border-accent bg-accent px-4 font-display text-[15px] text-on-accent transition duration-150 hover:-translate-x-px hover:-translate-y-px active:translate-x-0 active:translate-y-0 disabled:pointer-events-none disabled:opacity-40;
+    font-size-adjust: none;
+    letter-spacing: 0.05em;
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--accent)),
+      inset 0 0 0 3px rgb(var(--on-accent) / 0.45),
+      2px 2px 0 rgb(var(--ink) / 0.85);
+  }
+  .btn-solid:hover {
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--accent)),
+      inset 0 0 0 3px rgb(var(--on-accent) / 0.45),
+      4px 4px 0 rgb(var(--ink) / 0.85);
+  }
+  .btn-sm {
+    @apply min-h-[32px] px-3 text-[13px];
+  }
+  .btn-on {
+    @apply border-ink bg-ink text-paper;
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--ink)),
+      inset 0 0 0 3px rgb(var(--paper) / 0.35);
+  }
+  .icon-btn {
+    @apply inline-grid h-10 w-10 shrink-0 place-items-center border border-ink/50 bg-island/80 text-ink transition hover:border-ink hover:bg-ink hover:text-paper disabled:pointer-events-none disabled:opacity-30;
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--island) / 0.9),
+      inset 0 0 0 3px rgb(var(--ink) / 0.18);
+  }
+
+  .chip {
+    @apply inline-flex min-h-[30px] cursor-pointer items-center gap-1.5 rounded-full border border-ink/40 px-3 text-[14px] leading-none text-ink transition hover:border-ink;
+  }
+  .chip[aria-pressed='true'],
+  .chip-on {
+    @apply border-ink bg-ink text-paper;
+  }
+  .chip-off {
+    @apply border-danger text-danger line-through;
+  }
+
+  .field {
+    @apply min-h-[42px] w-full rounded-none border-0 border-b border-dotted border-ink/60 bg-transparent px-0 text-[16px] text-ink transition placeholder:italic placeholder:text-dim/80 focus:border-solid focus:border-accent focus:outline-none;
+  }
+  select.field {
+    @apply cursor-pointer;
+  }
+  select option,
+  select optgroup {
+    background: rgb(var(--island));
+    color: rgb(var(--ink));
+  }
+  .big-input {
+    @apply t-display w-full border-0 border-b-2 border-ink/40 bg-transparent pb-2 text-ink placeholder:text-ink/25 focus:border-accent focus:outline-none;
+  }
+
+  /* ---------- Surfaces: every panel is a little cartouche ---------- */
+  .panel {
+    @apply border border-ink/50 bg-island;
+    box-shadow:
+      inset 0 0 0 3px rgb(var(--island)),
+      inset 0 0 0 4px rgb(var(--ink) / 0.22);
+  }
+  .hud {
+    @apply border border-ink/60 bg-island/95;
+    box-shadow:
+      inset 0 0 0 2px rgb(var(--island)),
+      inset 0 0 0 3px rgb(var(--ink) / 0.2);
+  }
+  .rule {
+    @apply border-t border-ink/30;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-[3px] bg-ink/[0.07];
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(var(--ink) / 0.07), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* Hatched placeholder for missing artwork. */
+  .hatch {
+    background-color: rgb(var(--island));
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(var(--ink) / 0.07) 0 1px,
+      transparent 1px 9px
+    );
+  }
+
+  /* ---------- The chart ---------- */
+  /* Tinted sea with a faint graticule of latitude and longitude. */
+  .sea {
+    background-color: rgb(var(--sea) / 0.5);
+    background-image: linear-gradient(to right, rgb(var(--ink) / 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--ink) / 0.1) 1px, transparent 1px);
+  }
+  /* Islands on the chart are SVG engravings (components/atlas/glyphs.tsx); hover inks them red. */
+  a.isle:hover .isle-land,
+  a.isle:focus-visible .isle-land,
+  .isle[data-hot='true'] .isle-land {
+    fill: rgb(var(--accent) / 0.1);
+  }
+  a.isle:hover .isle-coast,
+  a.isle:focus-visible .isle-coast,
+  .isle[data-hot='true'] .isle-coast {
+    stroke: rgb(var(--accent));
+  }
+  .route {
+    stroke: rgb(var(--ink) / 0.45);
+    stroke-width: calc(1.2px / var(--z, 1));
+    fill: none;
+  }
+
+  /* ---------- Cartouche: the map's framed title block, used site-wide ---------- */
+  .cartouche {
+    position: relative;
+    min-width: 0;
+    border: 2px solid rgb(var(--ink) / 0.7);
+    background: rgb(var(--island));
+    padding: 5px;
+  }
+  .cartouche-glass {
+    background: rgb(var(--island) / 0.82);
+    backdrop-filter: blur(10px);
+  }
+  .cartouche-inner {
+    position: relative;
+    height: 100%;
+    border: 1px solid rgb(var(--ink) / 0.4);
+  }
+  .cartouche-gem {
+    position: absolute;
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border: 1.5px solid rgb(var(--ink) / 0.7);
+    background: rgb(var(--island));
+    pointer-events: none;
+  }
+  .cartouche-scale {
+    display: flex;
+    height: 7px;
+    border: 1px solid rgb(var(--ink) / 0.6);
+  }
+  .cartouche-scale > span {
+    flex: 1;
+  }
+  .cartouche-scale > span:nth-child(odd) {
+    background: rgb(var(--ink) / 0.75);
+  }
+
+  .room-in {
+    animation: room-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .fade-in {
+    animation: fade-in 0.4s ease both;
+  }
+}
+
+@layer utilities {
+  /* Scrolled content fades out beneath the floating top bar. */
+  .fade-top {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 3.6rem, #000 5rem);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 3.6rem, #000 5rem);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .mask-x {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 28px,
+      #000 calc(100% - 28px),
+      transparent
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+  }
+  .vertical {
+    writing-mode: vertical-rl;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes room-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.975);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes beacon {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+/* Dual range slider */
+.range-dual {
+  position: relative;
+  height: 28px;
+}
+.range-dual input[type='range'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+.range-dual input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: rgb(var(--accent));
+  border: 2px solid rgb(var(--island));
+  box-shadow: 0 0 0 1px rgb(var(--ink));
+  cursor: grab;
+}
+.range-dual input[type='range']::-moz-range-thumb {
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: rgb(var(--accent));
+  border: 2px solid rgb(var(--island));
+  cursor: grab;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
